@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Lobby</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Game Lobby</h1>
+        <div class="card">
+            <h2>Create Lobby</h2>
+            <input type="text" id="playerNameCreate" placeholder="Your Name">
+            <input type="text" id="lobbyName" placeholder="Lobby Name">
+            <button onclick="createLobby()">Create</button>
+        </div>
+        
+        <div class="card">
+            <h2>Join Lobby</h2>
+            <input type="text" id="playerNameJoin" placeholder="Your Name">
+            <input type="text" id="lobbyId" placeholder="Lobby ID">
+            <button onclick="joinLobby()">Join</button>
+        </div>
+    </div>
+    <script src="/js/home.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</body>
+</html>
