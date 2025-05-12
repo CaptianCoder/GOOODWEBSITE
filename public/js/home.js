@@ -1,24 +1,35 @@
 const socket = io();
 
 function createLobby() {
-    const playerName = document.getElementById('playerNameCreate').value;
+    const name = document.getElementById('createName').value;
     const lobbyName = document.getElementById('lobbyName').value;
-    if (playerName && lobbyName) {
-        socket.emit('createLobby', { playerName, lobbyName });
+    if (name && lobbyName) {
+        socket.emit('createLobby', { 
+            playerName: name, 
+            lobbyName: lobbyName 
+        });
     }
 }
 
 function joinLobby() {
-    const playerName = document.getElementById('playerNameJoin').value;
-    const lobbyId = document.getElementById('lobbyId').value;
-    if (playerName && lobbyId) {
-        socket.emit('joinLobby', { playerName, lobbyId });
+    const name = document.getElementById('joinName').value;
+    const code = document.getElementById('lobbyCode').value;
+    if (name && code) {
+        socket.emit('joinLobby', { 
+            playerName: name, 
+            lobbyId: code 
+        });
     }
 }
 
+socket.on('lobbyCreated', (lobbyId) => {
+    window.location.href = `/lobby?lobbyId=${lobbyId}`;
+});
+
 socket.on('lobbyUpdate', (lobby) => {
-    const player = lobby.players.find(p => p.id === socket.id);
-    if (player) {
-        window.location.href = `/lobby.html?lobbyId=${lobby.id}&playerName=${encodeURIComponent(player.name)}`;
-    }
+    window.location.href = `/lobby?lobbyId=${lobby.id}`;
+});
+
+socket.on('error', (message) => {
+    alert(message);
 });

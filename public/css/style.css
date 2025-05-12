@@ -1,7 +1,13 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
-    margin: 0;
+    background: #1a1a1a;
+    color: white;
     padding: 20px;
 }
 
@@ -11,50 +17,36 @@ body {
 }
 
 .card {
-    background: white;
+    background: #2d2d2d;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin: 20px 0;
 }
 
 input, button {
-    display: block;
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 5px;
-    box-sizing: border-box;
 }
 
 button {
-    background: #007bff;
+    background: #4CAF50;
     color: white;
-    border: none;
     cursor: pointer;
 }
 
-button:hover {
-    background: #0056b3;
-}
-
 .player-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 10px;
     margin: 20px 0;
 }
 
-.player {
-    background: #e9ecef;
-    padding: 10px;
+.player-card {
+    background: #3d3d3d;
+    padding: 15px;
     border-radius: 5px;
-}
-
-.game-section {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
 }
