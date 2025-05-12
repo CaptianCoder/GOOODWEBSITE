@@ -1,27 +1,29 @@
 const socket = io();
-const lobbyId = new URLSearchParams(window.location.search).get('lobbyId');
+const urlParams = new URLSearchParams(window.location.search);
+const lobbyId = urlParams.get('lobbyId');
+const playerName = decodeURIComponent(urlParams.get('playerName'));
 let isHost = false;
 
 socket.emit('joinLobby', { 
     lobbyId, 
-    playerName: `Player${Math.floor(Math.random() * 1000)}` 
+    playerName 
 });
 
 socket.on('lobbyUpdate', (lobby) => {
     document.getElementById('lobbyTitle').textContent = lobby.name;
     isHost = lobby.players.some(p => p.id === socket.id && p.isHost);
     
-    // Update players
+    // Update player list
     document.getElementById('players').innerHTML = lobby.players
         .map(player => `
             <div class="player-card">
-                <span>${player.name}</span>
-                ${player.isHost ? '👑' : ''}
+                ${player.name} 
+                ${player.isHost ? '👑 (Host)' : ''}
             </div>
         `).join('');
     
-    // Host controls
-    document.getElementById('hostPanel').style.display = isHost ? 'block' : 'none';
+    // Show host controls
+    document.getElementById('hostControls').style.display = isHost ? 'block' : 'none';
 });
 
 socket.on('gameStarted', (lobby) => {
@@ -32,6 +34,12 @@ socket.on('gameStarted', (lobby) => {
         gameArea.innerHTML = `
             <h2>${player.role === 'imposter' ? 'You are the IMPOSTER!' : `Word: ${player.word}`}</h2>
             <p>Discuss with other players to find the imposter!</p>
+        `;
+    } else {
+        gameArea.innerHTML = `
+            <h2>Your Question: ${player.question}</h2>
+            <input type="text" id="answerInput" placeholder="Your answer...">
+            <button onclick="submitAnswer()">Submit</button>
         `;
     }
 });
@@ -44,4 +52,9 @@ function startGame() {
         gameType: gameType,
         imposterCount: imposterCount
     });
+}
+
+function submitAnswer() {
+    const answer = document.getElementById('answerInput').value;
+    // Add answer submission logic
 }

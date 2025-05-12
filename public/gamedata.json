@@ -1,0 +1,16 @@
+{
+  "words": [
+    "Giraffe",
+    "Elephant",
+    "Kangaroo",
+    "Penguin",
+    "Rhino"
+  ],
+  "questions": [
+    "First kiss age?",
+    "Year you learned to ride a bike?",
+    "Number of siblings?",
+    "Birth month (number)?",
+    "Shoe size?"
+  ]
+}

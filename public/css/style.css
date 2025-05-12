@@ -35,6 +35,11 @@ button {
     background: #4CAF50;
     color: white;
     cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #45a049;
 }
 
 .player-list {
@@ -47,6 +52,10 @@ button {
     background: #3d3d3d;
     padding: 15px;
     border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
+}
+
+.host-controls {
+    border-top: 2px solid #4CAF50;
+    padding-top: 20px;
+    margin-top: 20px;
 }
