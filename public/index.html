@@ -3,7 +3,7 @@
 <head>
     <title>Game Lobby</title>
     <link rel="stylesheet" href="/css/style.css">
-    <!-- Load Socket.IO first -->
+    <!-- Load Socket.IO FIRST -->
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
@@ -12,20 +12,20 @@
         
         <div class="card">
             <h2>Create Lobby</h2>
-            <input type="text" id="createName" placeholder="Your Name" required>
             <input type="text" id="lobbyName" placeholder="Lobby Name" required>
+            <input type="text" id="playerName" placeholder="Your Name" required>
             <button onclick="createLobby()">Create</button>
         </div>
 
         <div class="card">
             <h2>Join Lobby</h2>
-            <input type="text" id="joinName" placeholder="Your Name" required>
-            <input type="text" id="lobbyCode" placeholder="Lobby Code" required>
+            <input type="text" id="joinLobbyName" placeholder="Lobby Name" required>
+            <input type="text" id="joinPlayerName" placeholder="Your Name" required>
             <button onclick="joinLobby()">Join</button>
         </div>
     </div>
 
-    <!-- Move home.js after socket.io -->
+    <!-- Home.js AFTER socket.io -->
     <script src="/js/home.js"></script>
 </body>
 </html>

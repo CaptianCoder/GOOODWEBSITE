@@ -1,62 +1,41 @@
+// Initialize socket once
 const socket = io();
 
 function createLobby() {
-    const name = document.getElementById('createName').value;
     const lobbyName = document.getElementById('lobbyName').value;
-    if (name && lobbyName) {
+    const playerName = document.getElementById('playerName').value;
+    
+    if (lobbyName && playerName) {
         socket.emit('createLobby', { 
-            playerName: name, 
-            lobbyName: lobbyName 
+            lobbyName: lobbyName,
+            playerName: playerName 
         });
     }
 }
 
 function joinLobby() {
-    const name = document.getElementById('joinName').value;
-    const code = document.getElementById('lobbyCode').value;
-    if (name && code) {
+    const lobbyName = document.getElementById('joinLobbyName').value;
+    const playerName = document.getElementById('joinPlayerName').value;
+    
+    if (lobbyName && playerName) {
         socket.emit('joinLobby', { 
-            playerName: name, 
-            lobbyId: code 
+            lobbyName: lobbyName,
+            playerName: playerName 
         });
     }
 }
 
-// Initialize socket after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    const socket = io(); // Now properly initialized
-    
-    window.createLobby = function() {
-        const name = document.getElementById('createName').value;
-        const lobbyName = document.getElementById('lobbyName').value;
-        if (name && lobbyName) {
-            socket.emit('createLobby', { 
-                playerName: name, 
-                lobbyName: lobbyName 
-            });
-        }
-    };
+// Handle lobby creation response
+socket.on('lobbyCreated', (lobbyData) => {
+    window.location.href = `/lobby.html?lobbyId=${lobbyData.id}&playerName=${encodeURIComponent(lobbyData.playerName)}`;
+});
 
-    window.joinLobby = function() {
-        const name = document.getElementById('joinName').value;
-        const code = document.getElementById('lobbyCode').value;
-        if (name && code) {
-            socket.emit('joinLobby', { 
-                playerName: name, 
-                lobbyId: code 
-            });
-        }
-    };
+// Handle lobby join response
+socket.on('lobbyJoined', (lobbyData) => {
+    window.location.href = `/lobby.html?lobbyId=${lobbyData.id}&playerName=${encodeURIComponent(lobbyData.playerName)}`;
+});
 
-    socket.on('lobbyCreated', (lobbyId) => {
-        window.location.href = `/lobby?lobbyId=${lobbyId}`;
-    });
-
-    socket.on('lobbyUpdate', (lobby) => {
-        window.location.href = `/lobby?lobbyId=${lobby.id}`;
-    });
-
-    socket.on('error', (message) => {
-        alert(message);
-    });
+// Error handling
+socket.on('error', (message) => {
+    alert(message);
 });
