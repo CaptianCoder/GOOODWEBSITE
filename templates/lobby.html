@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lobby</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="lobby-container">
+        <!-- Add this new header section -->
+        <div class="lobby-header">
+            <h2>Lobby Code: <span id="lobby-code-display"></span></h2>
+            <button onclick="copyCode()">📋 Copy Code</button>
+        </div>
+
+        <div class="sidebar">
+            <h2>Players (<span id="player-count">0</span>)</h2>
+            <ul id="player-list"></ul>
+        </div>
+        <div class="main-content">
+            <div id="host-controls" class="hidden">
+                <!-- Add this at the top of .main-content -->
+                <h2>Game Controls</h2>
+                <select id="game-select" onchange="updateGameSettings()">
+                    <option value="">Select Game</option>
+                    <option value="imposters">Imposters</option>
+                    <option value="guessing">Guessing Game</option>
+                </select>
+
+                <div id="game-settings"></div>
+                <button id="start-game" onclick="startGame()">Start Game</button>
+                <button id="end-round" onclick="endRound()" class="hidden">End Round</button>
+            </div>
+
+            <div id="game-area">
+                <div id="imposters-game" class="game-view hidden">
+                    <h3>Your Word: <span id="your-word"></span></h3>
+                    <div class="answers-container"></div>
+                </div>
+
+                <div id="guessing-game" class="game-view hidden">
+                    <h3>Your Question: <span id="your-question"></span></h3>
+                    <input type="text" id="answer-input" placeholder="Your answer">
+                    <button onclick="submitAnswer()">Submit</button>
+                    <div class="answers-container"></div>
+                </div>
+
+                <div id="voting-section" class="hidden">
+                    <h3>Vote for Suspect:</h3>
+                    <div class="vote-buttons"></div>
+                </div>
+
+                <div id="results-section" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="/static/js/lobby.js"></script>
+</body>
+</html>
