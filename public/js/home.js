@@ -17,5 +17,8 @@ function joinLobby() {
 }
 
 socket.on('lobbyUpdate', (lobby) => {
-    window.location.href = `/lobby.html?lobbyId=${lobby.id}&playerName=${encodeURIComponent(lobby.players.find(p => p.id === socket.id).name)}`;
+    const player = lobby.players.find(p => p.id === socket.id);
+    if (player) {
+        window.location.href = `/lobby.html?lobbyId=${lobby.id}&playerName=${encodeURIComponent(player.name)}`;
+    }
 });

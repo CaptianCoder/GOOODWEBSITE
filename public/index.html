@@ -7,13 +7,14 @@
 <body>
     <div class="container">
         <h1>Game Lobby</h1>
+        <!-- Update the create lobby section with -->
         <div class="card">
             <h2>Create Lobby</h2>
-            <input type="text" id="playerNameCreate" placeholder="Your Name">
-            <input type="text" id="lobbyName" placeholder="Lobby Name">
+            <input type="text" id="playerNameCreate" placeholder="Your Name" required>
+            <input type="text" id="lobbyName" placeholder="Lobby Name" required>
             <button onclick="createLobby()">Create</button>
         </div>
-        
+                
         <div class="card">
             <h2>Join Lobby</h2>
             <input type="text" id="playerNameJoin" placeholder="Your Name">

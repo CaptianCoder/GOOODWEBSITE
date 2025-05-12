@@ -123,4 +123,6 @@ io.on('connection', (socket) => {
   }
 });
 
-http.listen(3000, () => console.log('Server running on port 3000'));
+// Replace the last line with:
+const PORT = process.env.PORT || 3000;
+http.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
