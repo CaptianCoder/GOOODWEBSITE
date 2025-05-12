@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Lobby</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Game Lobby</h1>
+        <div class="menu">
+            <button onclick="showCreateLobby()">Create Lobby</button>
+            <button onclick="showJoinLobby()">Join Lobby</button>
+        </div>
+
+        <div id="create-lobby" class="hidden">
+            <input type="text" id="username-create" placeholder="Your name">
+            <button onclick="createLobby()">Create</button>
+        </div>
+
+        <div id="join-lobby" class="hidden">
+            <input type="text" id="username-join" placeholder="Your name">
+            <input type="text" id="lobby-code" placeholder="Lobby code">
+            <button onclick="joinLobby()">Join</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="/static/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+    "categories": {
+        "animals": ["Giraffe", "Elephant", "Lion"],
+        "foods": ["Pizza", "Burger", "Sushi"]
+    },
+    "questions": ["What's your favorite color?", "How old are you?"]
+}

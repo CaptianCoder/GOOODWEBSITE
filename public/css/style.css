@@ -1,61 +1,104 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background: #1a1a1a;
-    color: white;
+    margin: 0;
     padding: 20px;
+    background-color: #f0f2f5;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
+    text-align: center;
 }
 
-.card {
-    background: #2d2d2d;
+.hidden {
+    display: none !important;
+}
+
+.lobby-container {
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar {
+    width: 250px;
+    background: white;
     padding: 20px;
     border-radius: 10px;
-    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+.main-content {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#player-list {
+    list-style: none;
+    padding: 0;
+}
+
+#player-list li {
+    padding: 8px;
+    margin: 5px 0;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.game-view {
+    margin-top: 20px;
+}
+
+.answers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.answer-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.vote-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.vote-btn {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 button {
-    background: #4CAF50;
+    padding: 10px 20px;
+    margin: 5px;
+    background: #007bff;
     color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
 }
 
 button:hover {
-    background: #45a049;
+    opacity: 0.9;
 }
 
-.player-list {
-    display: grid;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.player-card {
-    background: #3d3d3d;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-.host-controls {
-    border-top: 2px solid #4CAF50;
-    padding-top: 20px;
-    margin-top: 20px;
+input[type="text"] {
+    padding: 8px;
+    margin: 5px;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }

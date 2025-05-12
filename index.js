@@ -3,11 +3,17 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const { v4: uuidv4 } = require('uuid');
-const gameData = require('./public/gameData.json');
 
+// Server configuration
 app.use(express.static('public'));
+app.get('/', (req, res) => res.sendFile(__dirname + '/public/index.html'));
+app.get('/lobby', (req, res) => res.sendFile(__dirname + '/public/lobby.html'));
+app.get('/favicon.ico', (req, res) => res.status(204));
 
+// Game data
 const lobbies = new Map();
+const WORDS = ['Giraffe', 'Elephant', 'Lion', 'Penguin'];
+const QUESTIONS = ['First kiss age?', 'First car year?', 'Number of siblings?'];
 
 io.on('connection', (socket) => {
   let currentLobby = null;
@@ -28,27 +34,25 @@ io.on('connection', (socket) => {
       settings: {}
     };
     
-    lobbies.set(lobbyName.toLowerCase(), newLobby);
+    lobbies.set(lobbyName, newLobby);
     socket.join(lobbyId);
     currentLobby = lobbyId;
-    io.to(lobbyId).emit('lobbyUpdate', newLobby);
+    io.to(lobbyId).emit('lobbyCreated', newLobby);
   });
 
   // Join lobby
   socket.on('joinLobby', ({ lobbyName, playerName }) => {
-    const lobby = lobbies.get(lobbyName.toLowerCase());
+    const lobby = lobbies.get(lobbyName);
     if (!lobby) return socket.emit('error', 'Lobby not found');
-    if (lobby.players.length >= 15) return socket.emit('error', 'Lobby full');
     if (lobby.players.some(p => p.name === playerName)) return socket.emit('error', 'Name taken');
-
-    const newPlayer = {
+    
+    lobby.players.push({
       id: socket.id,
       name: playerName,
       isHost: false,
       role: null
-    };
-
-    lobby.players.push(newPlayer);
+    });
+    
     socket.join(lobby.id);
     currentLobby = lobby.id;
     io.to(lobby.id).emit('lobbyUpdate', lobby);
@@ -64,37 +68,33 @@ io.on('connection', (socket) => {
 
     if (lobby.game === 'imposters') {
       const imposters = lobby.players.sort(() => 0.5 - Math.random()).slice(0, settings.imposterCount);
-      const word = gameData.words[Math.floor(Math.random() * gameData.words.length)];
+      const word = WORDS[Math.floor(Math.random() * WORDS.length)];
       
       lobby.players.forEach(player => {
         player.role = imposters.includes(player) ? 'imposter' : 'civilian';
         player.word = player.role === 'civilian' ? word : null;
       });
     } else {
-      const questions = [...gameData.questions].sort(() => Math.random() - 0.5);
       lobby.players.forEach((player, index) => {
-        player.question = index < settings.imposterQuestions ? 
-          questions[0] : 
-          questions[Math.floor(Math.random() * (questions.length - 1)) + 1];
+        player.question = QUESTIONS[index % QUESTIONS.length];
       });
     }
 
     io.to(currentLobby).emit('gameStarted', lobby);
   });
 
-  // Handle disconnects
+  // Disconnect handler
   socket.on('disconnect', () => {
     if (!currentLobby) return;
     const lobby = Array.from(lobbies.values()).find(l => l.id === currentLobby);
     if (!lobby) return;
 
     lobby.players = lobby.players.filter(p => p.id !== socket.id);
-    if (lobby.players.length === 0) {
-      lobbies.delete(lobby.name.toLowerCase());
-    } else {
-      io.to(currentLobby).emit('lobbyUpdate', lobby);
-    }
+    if (lobby.players.length === 0) lobbies.delete(lobby.name);
+    else io.to(currentLobby).emit('lobbyUpdate', lobby);
   });
 });
 
-http.listen(process.env.PORT || 3000, () => console.log('Server running'));
+http.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+  console.log('Server running on port', process.env.PORT || 3000);
+});

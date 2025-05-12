@@ -1,0 +1,4 @@
+{
+    "normal_questions": ["When was your first kiss?", "When did you learn to drive?"],
+    "imposter_questions": ["When did you become a spy?", "When did you visit Mars?"]
+}
