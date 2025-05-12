@@ -3,6 +3,8 @@
 <head>
     <title>Game Lobby</title>
     <link rel="stylesheet" href="/css/style.css">
+    <!-- Load Socket.IO first -->
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
@@ -23,7 +25,7 @@
         </div>
     </div>
 
+    <!-- Move home.js after socket.io -->
     <script src="/js/home.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
 </body>
 </html>
